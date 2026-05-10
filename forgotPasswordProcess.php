@@ -25,12 +25,12 @@ if(isset($_GET["e"])){
             $mail->IsSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'dinushkamadushan115@gmail.com';
-            $mail->Password = 'ywhnoxozjtgcyfzs';
+            $mail->Username = 'sample.sender@example.com';
+            $mail->Password = 'sample-app-password';
             $mail->SMTPSecure = 'ssl';
             $mail->Port = 465;
-            $mail->setFrom('dinushkamadushan115@gmail.com', 'Reset Password');
-            $mail->addReplyTo('dinushkamadushan115@gmail.com', 'Reset Password');
+            $mail->setFrom('sample.sender@example.com', 'Reset Password');
+            $mail->addReplyTo('sample.sender@example.com', 'Reset Password');
             $mail->addAddress($email);
             $mail->isHTML(true);
             $mail->Subject = 'letsplay Forgot Password Verification Code';

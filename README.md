@@ -132,7 +132,7 @@ In `connection.php`, update:
 In `forgotPasswordProcess.php`, update:
 
 - SMTP host/port/security
-- Sender email and app password
+- Sender email and app password (sample placeholders in code: `sample.sender@example.com` / `sample-app-password`)
 - Sender display name
 
 > Use environment variables or a secure secrets manager for production deployments.
@@ -195,4 +195,3 @@ Update:
 - Add server-side validation hardening and prepared statements
 - Add automated tests and CI workflows
 - Modularize codebase (routing, services, reusable components)
-
