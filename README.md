@@ -132,7 +132,9 @@ In `connection.php`, update:
 In `forgotPasswordProcess.php`, update:
 
 - SMTP host/port/security
-- Sender email and app password
+- SMTP settings via environment variables (`SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`)
+- SMTP credentials via environment variables (`SMTP_USERNAME`, `SMTP_PASSWORD`, optional `SMTP_FROM`) — username/password are required to send reset emails
+- Fallback sample placeholders in code: `sample.sender@example.com` / `sample-app-password`
 - Sender display name
 
 > Use environment variables or a secure secrets manager for production deployments.
@@ -195,4 +197,3 @@ Update:
 - Add server-side validation hardening and prepared statements
 - Add automated tests and CI workflows
 - Modularize codebase (routing, services, reusable components)
-
