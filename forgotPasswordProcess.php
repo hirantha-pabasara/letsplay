@@ -21,23 +21,26 @@ if(isset($_GET["e"])){
        Database::iud("UPDATE `user` SET `verification_code`='".$code."' WHERE 
         `email`='".$email."'");
 
+        $smtpHost = getenv("SMTP_HOST") ?: "smtp.gmail.com";
+        $smtpPort = getenv("SMTP_PORT") ?: "465";
+        $smtpSecure = getenv("SMTP_SECURE") ?: "ssl";
         $smtpUsername = getenv("SMTP_USERNAME") ?: "sample.sender@example.com";
         $smtpPassword = getenv("SMTP_PASSWORD") ?: "sample-app-password";
         $smtpFrom = getenv("SMTP_FROM") ?: $smtpUsername;
 
         if ($smtpUsername === "sample.sender@example.com" || $smtpPassword === "sample-app-password") {
-            echo ("SMTP credentials are not configured");
+            echo ("Unable to send password reset email. Please try again later.");
             exit;
         }
 
         $mail = new PHPMailer;
             $mail->IsSMTP();
-            $mail->Host = 'smtp.gmail.com';
+            $mail->Host = $smtpHost;
             $mail->SMTPAuth = true;
             $mail->Username = $smtpUsername;
             $mail->Password = $smtpPassword;
-            $mail->SMTPSecure = 'ssl';
-            $mail->Port = 465;
+            $mail->SMTPSecure = $smtpSecure;
+            $mail->Port = (int)$smtpPort;
             $mail->setFrom($smtpFrom, 'Reset Password');
             $mail->addReplyTo($smtpFrom, 'Reset Password');
             $mail->addAddress($email);
