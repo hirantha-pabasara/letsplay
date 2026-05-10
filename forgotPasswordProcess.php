@@ -24,17 +24,21 @@ if(isset($_GET["e"])){
         $smtpHost = getenv("SMTP_HOST") ?: "smtp.gmail.com";
         $smtpPort = getenv("SMTP_PORT") ?: "465";
         $smtpSecure = getenv("SMTP_SECURE") ?: "ssl";
-        $smtpUsername = getenv("SMTP_USERNAME") ?: "sample.sender@example.com";
-        $smtpPassword = getenv("SMTP_PASSWORD") ?: "sample-app-password";
-        $smtpFrom = getenv("SMTP_FROM") ?: $smtpUsername;
+        $smtpUsernameEnv = getenv("SMTP_USERNAME");
+        $smtpPasswordEnv = getenv("SMTP_PASSWORD");
+        $smtpFromEnv = getenv("SMTP_FROM");
+        $smtpUsername = $smtpUsernameEnv ?: "sample.sender@example.com";
+        $smtpPassword = $smtpPasswordEnv ?: "sample-app-password";
+        $smtpFrom = $smtpFromEnv ?: $smtpUsername;
 
         $smtpPortNumber = (int)$smtpPort;
         if ($smtpPortNumber < 1 || $smtpPortNumber > 65535) {
+            error_log("Invalid SMTP_PORT value '" . $smtpPort . "'. Falling back to 465.");
             $smtpPortNumber = 465;
         }
 
-        if ($smtpUsername === "sample.sender@example.com" || $smtpPassword === "sample-app-password") {
-            error_log("SMTP credentials are not configured. Set SMTP_USERNAME and SMTP_PASSWORD.");
+        if ($smtpUsernameEnv === false || trim($smtpUsernameEnv) === "" || $smtpPasswordEnv === false || trim($smtpPasswordEnv) === "") {
+            error_log("SMTP credentials are not configured. Missing SMTP_USERNAME or SMTP_PASSWORD environment variable.");
             echo ("Unable to send password reset email. Please try again later.");
             exit;
         }

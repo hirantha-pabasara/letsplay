@@ -133,7 +133,7 @@ In `forgotPasswordProcess.php`, update:
 
 - SMTP host/port/security
 - SMTP settings via environment variables (`SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`)
-- SMTP credentials via environment variables (`SMTP_USERNAME`, `SMTP_PASSWORD`, optional `SMTP_FROM`)
+- SMTP credentials via environment variables (`SMTP_USERNAME`, `SMTP_PASSWORD`, optional `SMTP_FROM`) — username/password are required to send reset emails
 - Fallback sample placeholders in code: `sample.sender@example.com` / `sample-app-password`
 - Sender display name
 
