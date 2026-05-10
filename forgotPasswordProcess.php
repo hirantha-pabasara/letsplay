@@ -28,7 +28,13 @@ if(isset($_GET["e"])){
         $smtpPassword = getenv("SMTP_PASSWORD") ?: "sample-app-password";
         $smtpFrom = getenv("SMTP_FROM") ?: $smtpUsername;
 
+        $smtpPortNumber = (int)$smtpPort;
+        if ($smtpPortNumber < 1 || $smtpPortNumber > 65535) {
+            $smtpPortNumber = 465;
+        }
+
         if ($smtpUsername === "sample.sender@example.com" || $smtpPassword === "sample-app-password") {
+            error_log("SMTP credentials are not configured. Set SMTP_USERNAME and SMTP_PASSWORD.");
             echo ("Unable to send password reset email. Please try again later.");
             exit;
         }
@@ -40,7 +46,7 @@ if(isset($_GET["e"])){
             $mail->Username = $smtpUsername;
             $mail->Password = $smtpPassword;
             $mail->SMTPSecure = $smtpSecure;
-            $mail->Port = (int)$smtpPort;
+            $mail->Port = $smtpPortNumber;
             $mail->setFrom($smtpFrom, 'Reset Password');
             $mail->addReplyTo($smtpFrom, 'Reset Password');
             $mail->addAddress($email);
