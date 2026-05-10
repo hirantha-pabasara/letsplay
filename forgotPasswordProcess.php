@@ -21,16 +21,25 @@ if(isset($_GET["e"])){
        Database::iud("UPDATE `user` SET `verification_code`='".$code."' WHERE 
         `email`='".$email."'");
 
+        $smtpUsername = getenv("SMTP_USERNAME") ?: "sample.sender@example.com";
+        $smtpPassword = getenv("SMTP_PASSWORD") ?: "sample-app-password";
+        $smtpFrom = getenv("SMTP_FROM") ?: $smtpUsername;
+
+        if ($smtpUsername === "sample.sender@example.com" || $smtpPassword === "sample-app-password") {
+            echo ("SMTP credentials are not configured");
+            exit;
+        }
+
         $mail = new PHPMailer;
             $mail->IsSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'sample.sender@example.com';
-            $mail->Password = 'sample-app-password';
+            $mail->Username = $smtpUsername;
+            $mail->Password = $smtpPassword;
             $mail->SMTPSecure = 'ssl';
             $mail->Port = 465;
-            $mail->setFrom('sample.sender@example.com', 'Reset Password');
-            $mail->addReplyTo('sample.sender@example.com', 'Reset Password');
+            $mail->setFrom($smtpFrom, 'Reset Password');
+            $mail->addReplyTo($smtpFrom, 'Reset Password');
             $mail->addAddress($email);
             $mail->isHTML(true);
             $mail->Subject = 'letsplay Forgot Password Verification Code';

@@ -132,7 +132,8 @@ In `connection.php`, update:
 In `forgotPasswordProcess.php`, update:
 
 - SMTP host/port/security
-- Sender email and app password (sample placeholders in code: `sample.sender@example.com` / `sample-app-password`)
+- SMTP credentials via environment variables (`SMTP_USERNAME`, `SMTP_PASSWORD`, optional `SMTP_FROM`)
+- Fallback sample placeholders in code: `sample.sender@example.com` / `sample-app-password`
 - Sender display name
 
 > Use environment variables or a secure secrets manager for production deployments.
